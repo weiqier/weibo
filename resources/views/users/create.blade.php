@@ -15,22 +15,34 @@
                 <div class="form-group">
                     <label for="name">名称：</label>
                     <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                    {!! $errors->first('name','<div class="alert alert-danger mt-2">
+                        :message
+                    </div>') !!}
                 </div>
 
                 <div class="form-group">
                     <label for="email">邮箱：</label>
                     <input type="text" name="email" class="form-control" value="{{ old('email') }}">
+                    {!! $errors->first('email','<div class="alert alert-danger mt-2">
+                        :message
+                    </div>') !!}
                 </div>
 
                 <div class="form-group">
                     <label for="password">密码：</label>
                     <input type="password" name="password" class="form-control" value="{{ old('password') }}">
+                    {!! $errors->first('password','<div class="alert alert-danger mt-2">
+                        :message
+                    </div>') !!}
                 </div>
 
                 <div class="form-group">
                     <label for="password_confirmation">确认密码：</label>
                     <input type="password" name="password_confirmation" class="form-control"
                         value="{{ old('password_confirmation') }}">
+                    {!! $errors->first('password_confirmation','<div class="alert alert-danger mt-2">
+                        :message
+                    </div>') !!}
                 </div>
 
                 <button type="submit" class="btn btn-primary">注册</button>
