@@ -10675,3 +10675,27 @@ footer img.brand-icon {
   height: 17px;
 }
 
+footer section.user_info {
+  padding-bottom: 10px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+footer section.user_info .gravatar {
+  float: none;
+  max-width: 70px;
+}
+
+footer section.user_info h1 {
+  font-size: 1.4em;
+  letter-spacing: -1px;
+  margin-bottom: 3px;
+  margin-top: 15px;
+}
+
+footer .gravatar {
+  float: left;
+  max-width: 50px;
+  border-radius: 50%;
+}
+
