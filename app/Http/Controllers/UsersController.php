@@ -10,7 +10,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['signup']]);
+        $this->middleware('auth', ['only' => ['show']]);
     }
     /**
      * Display a listing of the resource.
@@ -61,7 +61,7 @@ class UsersController extends Controller
         //     'password' => bcrypt($request->password)
         // ]);
         // Auth::login($user);
-        Auth::login('$user');
+        Auth::login($user);
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
         return redirect()->route('users.show', [$user]);
     }
