@@ -10,7 +10,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['signup']]);
     }
     /**
      * Display a listing of the resource.
