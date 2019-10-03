@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Weibo App') - HAKEER 入门教程</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <script src="{{ mix('js/app.js') }}"></script>
 </head>
 
 <body>
@@ -16,7 +15,7 @@
         @include('shared._alter')
         @yield('content')
         @include('layouts._footer')
-
+        <script src="{{ mix('js/app.js') }}"></script>
     </div>
 
 </body>
