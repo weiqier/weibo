@@ -23,7 +23,7 @@ class SessionsController extends Controller
             return redirect()->route('users.show', [Auth::user()]);
         } else {
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
-            return back()->withInput();
+            return back()->withInput();//withInput带旧数据返回
         }
     }
     public function destroy()

@@ -8,8 +8,6 @@
             <h5>登录</h5>
         </div>
         <div class="card-body">
-            @include('shared._alter')
-
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
