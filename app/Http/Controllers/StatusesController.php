@@ -25,69 +25,13 @@ class StatusesController extends Controller
         session()->flash('success', '发布成功！');
         return redirect()->back();
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Status  $status
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Status $status)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Status  $status
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Status $status)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Status  $status
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Status $status)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Status  $status
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Status $status)
     {
-        //
+        $this->authorize('destroy', $status);
+        $status->delete();
+        session()->flash('success', $status->content . '已被成功删除！');
+        return back();
     }
 }
