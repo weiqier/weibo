@@ -52,4 +52,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Status');
         // return $this->hasMany(Status::class);
     }
+    public function feed()
+    {
+        return $this->statuses()->orderBy('id', 'DESC');
+    }
 }
