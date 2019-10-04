@@ -7,10 +7,16 @@ use Auth;
 
 class SessionsController extends Controller
 {
-    public function create()
-    {
-        return view('sessions.create');
+    public function __construct(){
+        $this->middleware('guest',[
+            'only'=>'login'
+        ]);
     }
+    public function login()
+    {
+        return view('sessions.login');
+    }
+
     public function store(Request $request)
     {
         $credentials = $this->validate($request, [
@@ -20,7 +26,8 @@ class SessionsController extends Controller
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
             session()->flash('success', '亲爱的小伙伴，欢迎回来！');
-            return redirect()->route('users.show', [Auth::user()]);
+            $fallback = route('users.show', [Auth::user()]);
+            return redirect()->intended($fallback);
         } else {
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
             return back()->withInput();//withInput带旧数据返回

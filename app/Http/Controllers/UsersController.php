@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\User;
 use Auth;
 
 class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['show']]);
+        $this->middleware('auth', ['except' => ['show', 'signup', 'store']]);
+        $this->middleware('guest', [
+            'only' => 'signup'
+        ]);
     }
     /**
      * Display a listing of the resource.
@@ -85,6 +88,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
@@ -97,6 +101,7 @@ class UsersController extends Controller
      */
     public function update(User $user, Request $request)
     {
+        $this->authorize('update', $user);
         $this->validate($request, [
             'name' => 'required|max:50'
         ]);
