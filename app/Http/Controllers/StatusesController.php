@@ -4,9 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Status;
 use Illuminate\Http\Request;
+use Auth;
 
-class StatusController extends Controller
+class StatusesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'content' => 'required|max:140'
+        ]);
+
+        Auth::user()->statuses()->create([
+            'content' => $request['content']
+        ]);
+        session()->flash('success', '发布成功！');
+        return redirect()->back();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,16 +45,6 @@ class StatusController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
