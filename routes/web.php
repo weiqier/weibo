@@ -16,6 +16,7 @@ Route::get('/help', 'StaticPagesController@help')->name('help');
 Route::get('/about', 'StaticPagesController@about')->name('about');
 Route::get('signup', 'UsersController@signup')->name('signup');
 Route::resource('users', 'UsersController');
+Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email'); //邮件激活
 
 Route::get('login', 'SessionsController@login')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
