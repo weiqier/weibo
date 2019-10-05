@@ -56,4 +56,31 @@ class User extends Authenticatable
     {
         return $this->statuses()->orderBy('id', 'DESC');
     }
+    //建立粉丝和关注者多对多的关系
+    public function fans() //获取粉丝
+    {
+        return $this->belongsToMany('App\User', 'fans', 'user_id', 'fan_id');
+    }
+    public function followers() //获取关注者
+    {
+        return $this->belongsToMany('App\User', 'fans', 'fan_id', 'user_id');
+    }
+    //关注某个人
+    public function friend($user_ids)
+    {
+        $user_ids = is_array($user_ids) ?? compact('user_ids');
+        return $this->followers()->sync($user_ids, false); //sync默认为false
+    }
+    //取消关注
+    public function unfriend($user_ids)
+    {
+        $user_ids = is_array($user_ids) ?? compact('user_ids');
+        return $this->followers()->detach($user_ids);
+    }
+    //是否已关注过
+    public function isFriend($usr_id)
+    {
+        return $this->followers()->get()->contains($usr_id);  //$this->followers()->get() 相当于 $this->followers
+        // return $this->followers->contains($usr_id);
+    }
 }
