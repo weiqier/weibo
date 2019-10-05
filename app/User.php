@@ -68,13 +68,18 @@ class User extends Authenticatable
     //关注某个人
     public function friend($user_ids)
     {
-        $user_ids = is_array($user_ids) ?? compact('user_ids');
+        if (!is_array($user_ids)) {
+            $user_ids = compact('user_ids');
+        }
+        // $user_ids = is_array($user_ids) ? $user_ids : compact('user_ids');
         return $this->followers()->sync($user_ids, false); //sync默认为false
     }
     //取消关注
     public function unfriend($user_ids)
     {
-        $user_ids = is_array($user_ids) ?? compact('user_ids');
+        if (!is_array($user_ids)) {
+            $user_ids = compact('user_ids');
+        }
         return $this->followers()->detach($user_ids);
     }
     //是否已关注过
