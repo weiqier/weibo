@@ -132,4 +132,14 @@ class UsersController extends Controller
         $title = $user->name . '关注的人';
         return view('users.show_follow', compact('users', 'title'));
     }
+    public function friend($user_id)
+    {
+        Auth::user()->friend($user_id);
+        return back();
+    }
+    public function unfriend($user_id)
+    {
+        Auth::user()->unfriend($user_id);
+        return back();
+    }
 }
