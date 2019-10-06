@@ -16,11 +16,7 @@ class UsersController extends Controller
             'only' => 'signup'
         ]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $users = User::paginate(10);
@@ -32,22 +28,6 @@ class UsersController extends Controller
         return view('users.create');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -86,37 +66,21 @@ class UsersController extends Controller
         });
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(User $user)
     {
         $statuses = $user->statuses()->orderBy('created_at', 'DESC')->paginate(15);
         return view('users.show', compact('user', 'statuses'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(User $user)
     {
         $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(User $user, Request $request)
     {
         $this->authorize('update', $user);
@@ -134,12 +98,6 @@ class UsersController extends Controller
         return redirect()->route('users.show', $user->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(User $user)
     {
         $this->authorize('destroy', $user);
@@ -154,7 +112,6 @@ class UsersController extends Controller
             $user->activated = true;
             $user->activation_token = null;
             $user->save();
-
             Auth::login($user);
             session()->flash('success', '恭喜你，激活成功！');
             return redirect()->route('users.show', [$user]);
@@ -162,5 +119,17 @@ class UsersController extends Controller
             session()->flash('warning', '激活失败，请查看邮件重新激活');
             return redirect('/');
         }
+    }
+    public function fans(User $user)
+    {
+        $users = $user->fans()->paginate(30);
+        $title = $user->name . '的粉丝';
+        return view('users.show_follow', compact('users', 'title'));
+    }
+    public function followers(User $user)
+    {
+        $users = $user->followers()->paginate(30);
+        $title = $user->name . '关注的人';
+        return view('users.show_follow', compact('users', 'title'));
     }
 }
