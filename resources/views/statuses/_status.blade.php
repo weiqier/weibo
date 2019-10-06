@@ -6,8 +6,6 @@
         <h5 class="mt-0 mb-1">{{ $user->name }} <small> <span
                     class="badge badge-secondary">{{ $status->created_at->diffForHumans() }}</span></small></h5>
         {{ $status->content }}
-
-
     </div>
     @can('destroy', $status)
     <form action="{{ route('statuses.destroy', $status->id) }}" method="POST"

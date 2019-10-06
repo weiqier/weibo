@@ -54,7 +54,9 @@ class User extends Authenticatable
     }
     public function feed()
     {
-        return $this->statuses()->orderBy('id', 'DESC');
+        $user_ids = $this->followers->pluck('id')->toArray();
+        array_push($user_ids, $this->id);
+        return Status::whereIn('user_id', $user_ids)->with('user')->orderBy('created_at', 'desc');
     }
     //建立粉丝和关注者多对多的关系
     public function fans() //获取粉丝
